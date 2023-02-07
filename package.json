@@ -17,16 +17,18 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "prepare": "husky install",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "mock": "json-server __json_server_mock__/db.json --watch"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "husky": "^8.0.3",
+    "json-server": "^0.17.1",
     "lint-staged": "^13.1.1",
     "eslint-config-prettier": "^8.6.0",
     "prettier": "2.8.3"
