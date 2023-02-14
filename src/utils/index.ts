@@ -1,7 +1,7 @@
 // 判断值是否存在，并且不为0
-export const isFalsy = (value) => (value === 0 ? false : !value);
+export const isFalsy = (value: any) => (value === 0 ? false : !value);
 /** 清理对象中值为空的key */
-export const cleanObject = (object) => {
+export const cleanObject = (object: Record<string, any>) => {
   const result = { ...object };
   Object.keys(result).forEach((key) => {
     const value = result[key];
