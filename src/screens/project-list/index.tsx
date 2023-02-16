@@ -8,8 +8,13 @@ import SearchPanel from "./search-panel";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
+export type ParamType = {
+  name: string;
+  personId: string;
+};
+
 const ProjectList = () => {
-  const [param, setParam] = useState({
+  const [param, setParam] = useState<ParamType>({
     name: "",
     personId: "",
   });
