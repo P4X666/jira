@@ -1,6 +1,6 @@
 import useDebounce from "hooks/useDebounce";
 import useMount from "hooks/useMount";
-import * as qs from "qs";
+import qs from "qs";
 import { useEffect, useState } from "react";
 import { cleanObject } from "utils";
 import List from "./list";
