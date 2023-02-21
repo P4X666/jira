@@ -6,15 +6,19 @@ import App from "./App";
 import { AppProviders } from "context";
 // import reportWebVitals from './reportWebVitals';
 
+import { loadDevTools } from "jira-dev-tool";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-root.render(
-  <React.StrictMode>
-    <AppProviders>
-      <App />
-    </AppProviders>
-  </React.StrictMode>
+loadDevTools(() =>
+  root.render(
+    <React.StrictMode>
+      <AppProviders>
+        <App />
+      </AppProviders>
+    </React.StrictMode>
+  )
 );
 
 // If you want to start measuring performance in your app, pass a function
