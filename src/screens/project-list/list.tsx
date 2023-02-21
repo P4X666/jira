@@ -1,3 +1,4 @@
+import { Table } from "antd";
 import { useEffect, useRef } from "react";
 
 export type UserType = {
@@ -19,24 +20,28 @@ const List = (props: { list: ProjectType[]; users: UserType[] }) => {
     }, {} as Record<string, UserType>);
   }, [users]);
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>名称</th>
-          <th>负责人</th>
-        </tr>
-      </thead>
-      <tbody>
-        {list.map((project) => {
-          return (
-            <tr key={project.id}>
-              <td>{project.name}</td>
-              <td>{usersMap.current[project.personId]?.name}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <Table
+      pagination={false}
+      columns={[
+        {
+          title: "名称",
+          dataIndex: "name",
+          sorter: (a, b) => a.name.localeCompare(b.name),
+        },
+        {
+          title: "负责人",
+          render(value, project) {
+            return (
+              <span>
+                {users.find((user) => user.id === project.personId)?.name ||
+                  "未知"}
+              </span>
+            );
+          },
+        },
+      ]}
+      dataSource={list}
+    />
   );
 };
 

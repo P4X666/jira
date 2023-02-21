@@ -4,7 +4,7 @@ import { User } from "types/user";
 import { http } from "utils/http";
 import useMount from "hooks/useMount";
 
-interface AuthForm {
+export interface AuthForm {
   username: string;
   password: string;
 }
