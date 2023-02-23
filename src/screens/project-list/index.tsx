@@ -1,43 +1,42 @@
+import { useEffect, useState } from "react";
+import SearchPanel from "./search-panel";
+import List from "./list";
+import { useHttp } from "utils/http";
+import styled from "@emotion/styled";
+import { cleanObject } from "utils";
 import useDebounce from "hooks/useDebounce";
 import useMount from "hooks/useMount";
-import { useEffect, useState } from "react";
-import { cleanObject } from "utils";
-import { useHttp } from "utils/http";
-import List from "./list";
-import SearchPanel from "./search-panel";
 
-export type ParamType = {
-  name: string;
-  personId: string;
-};
+const ProjectListScreen = () => {
+  const [users, setUsers] = useState([]);
 
-const ProjectList = () => {
-  const [param, setParam] = useState<ParamType>({
+  const [param, setParam] = useState({
     name: "",
     personId: "",
   });
+  const debouncedParam = useDebounce(param, 200);
   const [list, setList] = useState([]);
-  const [users, setUsers] = useState([]);
   const client = useHttp();
-  useMount(() => {
-    client("users").then((response) => {
-      setUsers(response);
-    });
-  });
-  const debounceParams = useDebounce(param, 1000);
+
   useEffect(() => {
-    client("projects", { data: cleanObject(debounceParams) }).then(
-      (response) => {
-        setList(response);
-      }
-    );
-  }, [client, debounceParams]);
+    client("projects", { data: cleanObject(debouncedParam) }).then(setList);
+  }, [client, debouncedParam]);
+
+  useMount(() => {
+    client("users").then(setUsers);
+  });
+
   return (
-    <div>
-      <SearchPanel param={param} setParam={setParam} users={users} />
-      <List list={list} users={users} />
-    </div>
+    <Container>
+      <h1>项目列表</h1>
+      <SearchPanel users={users} param={param} setParam={setParam} />
+      <List users={users} list={list} />
+    </Container>
   );
 };
 
-export default ProjectList;
+const Container = styled.div`
+  padding: 3.2rem;
+`;
+
+export default ProjectListScreen;

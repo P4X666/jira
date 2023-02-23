@@ -1,11 +1,11 @@
 import { Input, Select } from "antd";
-import { ParamType } from ".";
-import { UserType } from "./list";
+import { ParamType } from "types/project";
+import { User } from "types/user";
 
 type SearchPanelProps = {
   param: ParamType;
   setParam: (params: SearchPanelProps["param"]) => void;
-  users: UserType[];
+  users: User[];
 };
 const SearchPanel = (props: SearchPanelProps) => {
   const { param, setParam, users } = props;

@@ -1,26 +1,24 @@
 import { Table } from "antd";
-import { useEffect, useRef } from "react";
+import dayjs from "dayjs";
+import { User } from "types/user";
 
-export type UserType = {
+interface Project {
   id: string;
   name: string;
-};
-
-type ProjectType = UserType & {
   personId: string;
-};
+  pin: boolean;
+  organization: string;
+  created: number;
+}
 
-const List = (props: { list: ProjectType[]; users: UserType[] }) => {
-  const { list, users } = props;
-  const usersMap = useRef<Record<string, UserType>>({});
-  useEffect(() => {
-    usersMap.current = users.reduce((pre, user) => {
-      pre[user.id] = user;
-      return pre;
-    }, {} as Record<string, UserType>);
-  }, [users]);
+interface ListProps {
+  list: Project[];
+  users: User[];
+}
+const List = ({ list, users }: ListProps) => {
   return (
     <Table
+      rowKey={"id"}
       pagination={false}
       columns={[
         {
@@ -29,12 +27,28 @@ const List = (props: { list: ProjectType[]; users: UserType[] }) => {
           sorter: (a, b) => a.name.localeCompare(b.name),
         },
         {
+          title: "部门",
+          dataIndex: "organization",
+        },
+        {
           title: "负责人",
           render(value, project) {
             return (
               <span>
                 {users.find((user) => user.id === project.personId)?.name ||
                   "未知"}
+              </span>
+            );
+          },
+        },
+        {
+          title: "创建时间",
+          render(value, project) {
+            return (
+              <span>
+                {project.created
+                  ? dayjs(project.created).format("YYYY-MM-DD")
+                  : "无"}
               </span>
             );
           },
